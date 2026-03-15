@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | COVA</title>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav-bar">
+    <a href="products.html" class="back-btn"><i class="fas fa-arrow-left"></i> PREVIOUS PAGE</a>
+</nav>
+
+<header class="hero">
+    <h1>COVA</h1>
+    <p>The State of Eternity</p>
+</header>
+
+<main class="main-container">
+    <section class="story-card">
+        <div class="glass-inner">
+            <h2>OUR HISTORY</h2>
+            <p>Born in Nairobi, COVA is a movement blending high-fashion silhouettes with raw urban energy. We believe in "The State of Eternity"—creating pieces designed to outlast trends and endure for a decade. Quality isn't a goal; it's our baseline.</p>
+        </div>
+    </section>
+
+    <div class="contact-grid">
+        <div class="glass-card">
+            <h2>LOCATIONS</h2>
+            <div class="city-unit">
+                <strong>NAIROBI HQ</strong>
+                <span>Shop 12, Business Center</span>
+                <a href="https://wa.me" 
+   class="wa-link" 
+   target="_blank" 
+   style="text-decoration: none; color: inherit; display: inline-flex; align-items: center; gap: 8px;">
+  <i class="fab fa-whatsapp"></i> CONTACT
+</a>
+
+
+            </div>
+            <div class="city-unit">
+                <strong>MOMBASA HUB</strong>
+                <span>Shop 12, Business Center</span>
+               ><a href="https://wa.me" 
+   class="wa-link" 
+   target="_blank" 
+   style="text-decoration: none; color: inherit; display: inline-flex; align-items: center; gap: 8px;">
+  <i class="fab fa-whatsapp"></i> CONTACT
+</a>
+
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-title">COMMUNITY FEED</h2>
+    <div class="review-grid" id="reviewContainer">
+        <!-- Past Reviews Pre-loaded -->
+        <div class="review-item glass-card">
+            <div class="stars">★★★★★</div>
+            <img src="WhatsApp Image 2026-02-16 at 2.09.10 PM (1).jpeg" class="review-img" alt="Fit 1">
+            <strong>Thugger.</strong>
+            <p>"The clean white base makes it easy to pair with various bottoms; here, it is styled with light-wash denim for a classic outdoor look."</p>
+        </div>
+        <div class="review-item glass-card">
+            <div class="stars">★★★★★</div>
+            <img src="WhatsApp Image 2026-03-15 at 10.19.03 AM.jpeg" class="review-img" alt="Fit 2">
+            <strong>Ngurimu.</strong>
+            <p>"Just got the black and white Cove tees and I'm feeling the vibe. The fit is spot on—not too tight, but still gives that clean, structured look that's perfect for a day out with the boys."</p>
+        </div>
+        <div class="review-item glass-card">
+            <div class="stars">★★★★★</div>
+            <img src="WhatsApp Image 2026-02-13 at 10.11.47 AM.jpeg" class="review-img" alt="Fit 3">
+            <strong>Caxton.</strong>
+            <p>"Cova doesn't miss. These cargos are literally 'Eternity' quality."</p>
+        </div>
+    </div>
+
+    <div class="review-form glass-card">
+        <h2>LEAVE YOUR MARK</h2>
+        <form id="revForm">
+            <div class="star-rating">
+                <input type="radio" name="rating" id="s5" value="5" required><label for="s5">★</label>
+                <input type="radio" name="rating" id="s4" value="4"><label for="s4">★</label>
+                <input type="radio" name="rating" id="s3" value="3"><label for="s3">★</label>
+                <input type="radio" name="rating" id="s2" value="2"><label for="s2">★</label>
+                <input type="radio" name="rating" id="s1" value="1"><label for="s1">★</label>
+            </div>
+            <input type="text" id="revName" class="input-field" placeholder="NAME" required>
+            <textarea id="revText" class="input-field" placeholder="DESCRIBE THE FIT..." rows="3" required></textarea>
+            
+            <label for="revPhoto" class="upload-btn">
+                <i class="fas fa-camera"></i> UPLOAD FIT IMAGE
+            </label>
+            <input type="file" id="revPhoto" accept="image/*" style="display:none">
+            <p id="fileName" class="file-name"></p>
+
+            <button type="submit" class="submit-btn">POST EXPERIENCE</button>
+        </form>
+    </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
