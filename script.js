@@ -53,9 +53,20 @@ function sendToWhatsApp() {
                   `*Customization:* ${customization || "None"}%0A%0A` +
                   `Please let me know how to proceed with the payment.`;
 
-    // WhatsApp API URL (Universal Link format)
-    const whatsappUrl = `https://wa.me{+254755325194}?text=${message}`;
-    
+    let enteredNumber = document.getElementById('whatsapp-number')?.value || phoneNumber;
+    enteredNumber = enteredNumber.trim();
+    if (!enteredNumber) enteredNumber = phoneNumber;
+
+    const cleanPhone = enteredNumber.replace(/\D/g, '');
+    if (!cleanPhone || cleanPhone.length < 10) {
+        return alert('Invalid phone number. Use international format like +254722123456 or 254722123456.');
+    }
+
+    document.getElementById('support-number').innerText = `+${cleanPhone}`;
+
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
+
     window.open(whatsappUrl, '_blank');
 }
 
@@ -77,16 +88,14 @@ const revForm = document.getElementById('revForm');
 const photoInput = document.getElementById('revPhoto');
 const fileNameDisplay = document.getElementById('fileName');
 
-// Update file name UI
-photoInput.onchange = () => { fileNameDisplay.innerText = photoInput.files[0].name; };
-
-// Load user-added reviews from Storage
-window.onload = () => {
+// Load user-added reviews from Storage safely on pages with review form
+if (container) {
     const userReviews = JSON.parse(localStorage.getItem('cova_custom_reviews')) || [];
     userReviews.forEach(rev => displayReview(rev));
-};
+}
 
 function displayReview(data) {
+    if (!container) return;
     const starStr = '★'.repeat(data.rating) + '☆'.repeat(5 - data.rating);
     const div = document.createElement('div');
     div.className = 'review-item glass-card';
@@ -99,31 +108,43 @@ function displayReview(data) {
     container.prepend(div);
 }
 
-revForm.onsubmit = async (e) => {
-    e.preventDefault();
-    
-    const rating = document.querySelector('input[name="rating"]:checked').value;
-    const name = document.getElementById('revName').value.toUpperCase();
-    const text = document.getElementById('revText').value;
-    
-    let photoBase64 = "";
-    if (photoInput.files[0]) {
-        photoBase64 = await new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onload = (e) => resolve(e.target.result);
-            reader.readAsDataURL(photoInput.files[0]);
-        });
-    }
+if (photoInput && fileNameDisplay) {
+    photoInput.onchange = () => {
+        const file = photoInput.files[0];
+        fileNameDisplay.innerText = file ? file.name : '';
+    };
+}
 
-    const reviewObj = { name, text, rating: parseInt(rating), photo: photoBase64 };
-    
-    // Save to LocalStorage
-    const stored = JSON.parse(localStorage.getItem('cova_custom_reviews')) || [];
-    stored.push(reviewObj);
-    localStorage.setItem('cova_custom_reviews', JSON.stringify(stored));
+if (revForm) {
+    revForm.onsubmit = async (e) => {
+        e.preventDefault();
 
-    displayReview(reviewObj);
-    revForm.reset();
-    fileNameDisplay.innerText = "";
-    alert("FIT UPLOADED TO THE STATE OF ETERNITY.");
-};
+        const ratingInput = document.querySelector('input[name="rating"]:checked');
+        const nameInput = document.getElementById('revName');
+        const textInput = document.getElementById('revText');
+
+        const rating = ratingInput ? ratingInput.value : '5';
+        const name = nameInput ? nameInput.value.toUpperCase() : 'ANONYMOUS';
+        const text = textInput ? textInput.value : '';
+
+        let photoBase64 = "";
+        if (photoInput && photoInput.files[0]) {
+            photoBase64 = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.readAsDataURL(photoInput.files[0]);
+            });
+        }
+
+        const reviewObj = { name, text, rating: parseInt(rating), photo: photoBase64 };
+
+        const stored = JSON.parse(localStorage.getItem('cova_custom_reviews')) || [];
+        stored.push(reviewObj);
+        localStorage.setItem('cova_custom_reviews', JSON.stringify(stored));
+
+        displayReview(reviewObj);
+        revForm.reset();
+        if (fileNameDisplay) fileNameDisplay.innerText = "";
+        alert("FIT UPLOADED TO THE STATE OF ETERNITY.");
+    };
+}
